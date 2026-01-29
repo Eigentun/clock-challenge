@@ -56,8 +56,6 @@
     </div>
     <h2 id="message"></h2>
     <script>
-      console.log("test");
-
       setInterval(clockUpdate, 1000);
 
       function clockUpdate() {
@@ -79,8 +77,6 @@
 
         time.innerHTML = timeData;
         date.innerHTML = calenderData;
-
-        console.log(hourData);
 
         if (hourData >= 6 && hourData < 12) {
           message.innerHTML = "Good Morning";
