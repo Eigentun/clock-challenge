@@ -64,25 +64,36 @@
         return randomMachineOption;
       }
 
+      function decideMatchup(target) {
+        let playerOption = target.dataset.id;
+        let machineOption = pickMachineOption();
+        let gameState;
+
+        if (playerOption == machineOption) {
+          gameState = "Tie";
+        } else if (playerOption == "Rock" && machineOption == "Scissors") {
+          gameState = "You won";
+        } else if (playerOption == "Paper" && machineOption == "Rock") {
+          gameState = "You won";
+        } else if (playerOption == "Scissors" && machineOption == "Paper") {
+          gameState = "You won";
+        } else {
+          gameState = "You lost";
+        }
+
+        let gameData = {
+          player: playerOption,
+          machine: machineOption,
+          game: gameState,
+        };
+
+        console.log(gameData);
+        return gameData;
+      }
+
       buttons.forEach((button) =>
-        button.addEventListener("click", function decideMatchup() {
-          let playerOption = button.dataset.id;
-          let machineOption = pickMachineOption();
-          let gameState;
-
-          if (playerOption == machineOption) {
-            gameState = "Tie";
-          } else if (playerOption == "Rock" && machineOption == "Scissors") {
-            gameState = "You won";
-          } else if (playerOption == "Paper" && machineOption == "Rock") {
-            gameState = "You won";
-          } else if (playerOption == "Scissors" && machineOption == "Paper") {
-            gameState = "You won";
-          } else {
-            gameState = "You lost";
-          }
-
-          console.log(gameState);
+        button.addEventListener("click", () => {
+          decideMatchup(button);
         }),
       );
     </script>
