@@ -60,25 +60,25 @@
           month: "long",
           day: "numeric",
         });
-        let dataArray = {
+        let dataObject = {
           time: timeData,
           hour: hourData,
           calender: calenderData,
         };
-        return dataArray;
+        return dataObject;
       }
-      function setHTML(arr) {
-        time.innerHTML = arr.time;
-        date.innerHTML = arr.calender;
+      function setHTML(obj) {
+        time.innerHTML = obj.time;
+        date.innerHTML = obj.calender;
       }
-      function displayMessage(arr) {
-        if (arr.hour >= 6 && arr.hour < 12) {
+      function displayMessage(obj) {
+        if (obj.hour >= 6 && obj.hour < 12) {
           message.innerHTML = "Good Morning";
           message.style.color = "orange";
-        } else if (arr.hour >= 12 && arr.hour < 20) {
+        } else if (obj.hour >= 12 && obj.hour < 20) {
           message.innerHTML = "Good Afternoon";
           message.style.color = "rgb(45, 100, 251)";
-        } else if (arr.hour >= 20 && arr.hour < 23) {
+        } else if (obj.hour >= 20 && obj.hour < 23) {
           message.innerHTML = "Good Evening";
           message.style.color = "rgb(9, 19, 110)";
         } else {

@@ -28,7 +28,7 @@
       }
 
       button {
-        font-size: 10rem;
+        font-size: 7rem;
       }
 
       .machine-wrapper {
@@ -37,40 +37,52 @@
 
       p {
         font-size: 10rem;
-        padding: 5px;
-        background-color: rgb(255, 131, 131);
-        margin: 1px;
+
+        margin: 0;
       }
     </style>
   </head>
   <body>
     <h1>Will you beat the Machine?</h1>
     <div class="button-wrapper">
-      <button data-id="rock">🪨</button>
-      <button data-id="paper">🧻</button>
-      <button data-id="scissors">✂️</button>
+      <button data-id="Rock">ROCK!</button>
+      <button data-id="Paper">PAPER!</button>
+      <button data-id="Scissors">SCISSORS!</button>
     </div>
     <h1>versus</h1>
     <div class="machine-wrapper">
-      <p data-id="rock">🪨</p>
-      <p data-id="paper">🧻</p>
-      <p data-id="scissors">✂️</p>
+      <p id="machine">Thinking...</p>
     </div>
     <script>
       let buttons = document.querySelectorAll("button");
-      let machineOptions = ["rock", "paper", "scissors"];
+      let machineOptions = ["Rock", "Paper", "Scissors"];
 
       function pickMachineOption() {
-        let machineOption =
+        let randomMachineOption =
           machineOptions[Math.floor(Math.random() * machineOptions.length)];
 
-        return machineOption;
+        return randomMachineOption;
       }
 
       buttons.forEach((button) =>
-        button.addEventListener("click", () => {
-          console.log(button.dataset.id);
-          console.log(pickMachineOption());
+        button.addEventListener("click", function decideMatchup() {
+          let playerOption = button.dataset.id;
+          let machineOption = pickMachineOption();
+          let gameState;
+
+          if (playerOption == machineOption) {
+            gameState = "Tie";
+          } else if (playerOption == "Rock" && machineOption == "Scissors") {
+            gameState = "You won";
+          } else if (playerOption == "Paper" && machineOption == "Rock") {
+            gameState = "You won";
+          } else if (playerOption == "Scissors" && machineOption == "Paper") {
+            gameState = "You won";
+          } else {
+            gameState = "You lost";
+          }
+
+          console.log(gameState);
         }),
       );
     </script>
