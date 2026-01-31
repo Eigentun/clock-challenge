@@ -20,6 +20,18 @@
         height: 100vh;
       }
 
+      .won {
+        background-color: rgb(0, 182, 0);
+      }
+
+      .lost {
+        background-color: rgb(209, 8, 8);
+      }
+
+      .tied {
+        background-color: yellow;
+      }
+
       h1 {
         font-size: 4rem;
         font-family: Arial, Helvetica, sans-serif;
@@ -31,13 +43,24 @@
         font-size: 7rem;
       }
 
+      .selected {
+        opacity: 1 !important;
+        -webkit-box-shadow: 0px 0px 25px 13px rgba(0, 0, 0, 0.6);
+        box-shadow: 0px 0px 25px 13px rgba(0, 0, 0, 0.6);
+      }
+
+      .deselected {
+        opacity: 0.25;
+        pointer-events: none;
+      }
+
       .machine-wrapper {
         display: flex;
       }
 
       p {
-        font-size: 10rem;
-
+        font-size: 7rem;
+        font-family: Arial, Helvetica, sans-serif;
         margin: 0;
       }
     </style>
@@ -53,6 +76,7 @@
     <div class="machine-wrapper">
       <p id="machine">Thinking...</p>
     </div>
+    <h1 id="game-state"></h1>
     <script>
       let buttons = document.querySelectorAll("button");
       let machineOptions = ["Rock", "Paper", "Scissors"];
@@ -70,7 +94,7 @@
         let gameState;
 
         if (playerOption == machineOption) {
-          gameState = "Tie";
+          gameState = "You tied";
         } else if (playerOption == "Rock" && machineOption == "Scissors") {
           gameState = "You won";
         } else if (playerOption == "Paper" && machineOption == "Rock") {
@@ -91,9 +115,45 @@
         return gameData;
       }
 
+      let machineText = document.querySelector("#machine");
+      let gameStateMessage = document.querySelector("#game-state");
+      let body = document.querySelector("body");
+
+      function setHTML(obj) {
+        machineText.innerHTML = obj.machine;
+        gameStateMessage.innerHTML = obj.game;
+      }
+
+      function setBackground(obj) {
+        if (obj.game == "You won") {
+          body.className = "";
+          body.classList.add("won");
+        } else if (obj.game == "You lost") {
+          body.className = "";
+          body.classList.add("lost");
+        } else {
+          body.className = "";
+          body.classList.add("tied");
+        }
+      }
+
+      function highlightButton(target) {
+        target.classList.add("selected");
+        buttons.forEach((button) => {
+          button.classList.add("deselected");
+          //button.className = " ";
+          setTimeout(() => {
+            button.className = " ";
+          }, 3000);
+        });
+      }
+
       buttons.forEach((button) =>
         button.addEventListener("click", () => {
-          decideMatchup(button);
+          let passGameData = decideMatchup(button);
+          setHTML(passGameData);
+          setBackground(passGameData);
+          highlightButton(button);
         }),
       );
     </script>
