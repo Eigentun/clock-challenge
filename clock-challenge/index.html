@@ -8,13 +8,11 @@
       html {
         font-size: 62.5%;
       }
-
       * {
         padding: 0;
         margin: 0;
         box-sizing: border-box;
       }
-
       body {
         display: flex;
         flex-direction: column;
@@ -22,13 +20,11 @@
         align-items: center;
         height: 100vh;
       }
-
       h1 {
         font-family: Arial, Helvetica, sans-serif;
         text-align: left;
         border-bottom: 1px solid black;
       }
-
       h2 {
         font-size: 4rem;
         margin-top: 20px;
@@ -36,16 +32,11 @@
         font-weight: lighter;
         transition: color 2s ease;
       }
-
       #clock {
         margin-top: 20px;
         font-size: 6rem;
         text-align: center;
-      }
-
-      /* #clock > p {
-        margin-bottom: -20px;
-      } */
+      } /* #clock > p { margin-bottom: -20px; } */
     </style>
   </head>
   <body>
@@ -56,10 +47,10 @@
     </div>
     <h2 id="message"></h2>
     <script>
-      setInterval(clockUpdate, 1000);
-
-      function clockUpdate() {
-        // get the Data
+      let time = document.querySelector("#time");
+      let date = document.querySelector("#date");
+      let message = document.querySelector("#message");
+      function getData() {
         let d = new Date();
         let timeData = d.toLocaleTimeString("de-DE");
         let hourData = d.getHours();
@@ -69,22 +60,25 @@
           month: "long",
           day: "numeric",
         });
-
-        // set the HTML
-        let time = document.querySelector("#time");
-        let date = document.querySelector("#date");
-        let message = document.querySelector("#message");
-
-        time.innerHTML = timeData;
-        date.innerHTML = calenderData;
-
-        if (hourData >= 6 && hourData < 12) {
+        let dataArray = {
+          time: timeData,
+          hour: hourData,
+          calender: calenderData,
+        };
+        return dataArray;
+      }
+      function setHTML(arr) {
+        time.innerHTML = arr.time;
+        date.innerHTML = arr.calender;
+      }
+      function displayMessage(arr) {
+        if (arr.hour >= 6 && arr.hour < 12) {
           message.innerHTML = "Good Morning";
           message.style.color = "orange";
-        } else if (hourData >= 12 && hourData < 20) {
+        } else if (arr.hour >= 12 && arr.hour < 20) {
           message.innerHTML = "Good Afternoon";
           message.style.color = "rgb(45, 100, 251)";
-        } else if (hourData >= 20 && hourData < 23) {
+        } else if (arr.hour >= 20 && arr.hour < 23) {
           message.innerHTML = "Good Evening";
           message.style.color = "rgb(9, 19, 110)";
         } else {
@@ -92,6 +86,11 @@
           message.style.color = "black";
         }
       }
+      setInterval(() => {
+        let data = getData();
+        setHTML(data);
+        displayMessage(data);
+      }, 1000);
     </script>
   </body>
 </html>
