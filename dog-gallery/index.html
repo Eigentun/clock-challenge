@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dog Gallery</title>
+    <style>
+      html {
+        font-size: 67.5%;
+      }
+
+      body {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      #dog-image {
+        max-width: 500px;
+        min-width: 500px;
+
+        min-height: 200px;
+        margin: 20px;
+      }
+
+      .slider-wrapper {
+        display: flex;
+
+        align-items: center;
+      }
+
+      .slider-wrapper > button {
+        height: 50px;
+        width: 100%;
+        padding: 5px;
+        font-size: 3rem;
+      }
+
+      .hidden {
+        opacity: 25%;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Woof woof!</h1>
+    <div class="slider-wrapper">
+      <button id="pre">Previous</button>
+      <img src="" alt="Picture of a random Dog" id="dog-image" />
+      <button id="next">Next</button>
+    </div>
+    <script>
+      let dogImage = document.querySelector("#dog-image");
+      let nextButton = document.querySelector("#next");
+      let preButton = document.querySelector("#pre");
+      let imageArray = [];
+      let arrayPosition;
+
+      async function fetchDogData() {
+        try {
+          const response = await fetch(
+            "https://dog.ceo/api/breeds/image/random",
+          );
+          if (!response.ok) {
+            throw new Error("Could not fetch dogs");
+          }
+
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      nextButton.addEventListener("click", () => {
+        // console.log("test");
+
+        if (imageArray === undefined || imageArray.length == 0) {
+          fetchDogData().then((result) => {
+            imageArray.push(result.message);
+            arrayPosition = 0;
+            dogImage.src = imageArray[arrayPosition];
+            console.log(imageArray);
+          });
+        } else if (arrayPosition < imageArray.length - 1) {
+          arrayPosition = arrayPosition + 1;
+          dogImage.src = imageArray[arrayPosition];
+        } else if (arrayPosition === imageArray.length - 1) {
+          fetchDogData().then((result) => {
+            imageArray.push(result.message);
+            arrayPosition = imageArray.length - 1;
+            dogImage.src = imageArray[arrayPosition];
+            console.log(imageArray);
+          });
+        }
+      });
+
+      preButton.addEventListener("click", () => {
+        // console.log("test");
+        if (arrayPosition < imageArray.length && arrayPosition > 0) {
+          arrayPosition = arrayPosition - 1;
+          dogImage.src = imageArray[arrayPosition];
+        }
+      });
+    </script>
+  </body>
+</html>
