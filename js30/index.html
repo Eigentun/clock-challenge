@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drum Kit</title>
+    <style>
+      html {
+        font-size: 67.5%;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+      }
+      .button-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+      button {
+        font-size: 2rem;
+        margin: 5px;
+        height: 90vh;
+        width: 10%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="button-wrapper">
+      <button data-key="10">Boom</button>
+      <button data-key="11">Clap</button>
+      <button data-key="12">Hi-Hat</button>
+      <button data-key="13">Kick</button>
+      <button data-key="14">Open-Hat</button>
+      <button data-key="15">Ride</button>
+      <button data-key="16">Snare</button>
+      <button data-key="17">Tink</button>
+      <button data-key="18">Tom</button>
+    </div>
+
+    <audio src="sounds/boom.wav" data-key="10"></audio>
+    <audio src="sounds/clap.wav" data-key="11"></audio>
+    <audio src="sounds/hihat.wav" data-key="12"></audio>
+    <audio src="sounds/kick.wav" data-key="13"></audio>
+    <audio src="sounds/openhat.wav" data-key="14"></audio>
+    <audio src="sounds/ride.wav" data-key="15"></audio>
+    <audio src="sounds/snare.wav" data-key="16"></audio>
+    <audio src="sounds/tink.wav" data-key="17"></audio>
+    <audio src="sounds/tom.wav" data-key="18"></audio>
+    <script>
+      console.log("test");
+      let buttons = document.querySelectorAll("button");
+      let audios = document.querySelectorAll("audio");
+
+      function playAudio(key) {
+        let audioFile = document.querySelector(`audio[data-key="${key}"]`);
+        audioFile.play();
+        // audios.forEach((audio) => {
+        //   if (key === audio.dataset.key) {
+        //     console.log(audio.dataset.key);
+        //   }
+        // });
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          playAudio(button.dataset.key);
+        });
+      });
+    </script>
+  </body>
+</html>
