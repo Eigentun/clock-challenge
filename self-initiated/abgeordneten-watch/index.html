@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Abgeordnetenwatch</title>
+    <style>
+      html {
+        font-size: 62.5%;
+      }
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      h1 {
+        font-size: 5rem;
+        font-family: "Courier New", Courier, monospace;
+        margin: 20px;
+        font-weight: lighter;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Abgeordnetenwatch</h1>
+    <div class="link-wrapper"></div>
+    <script>
+      const linkWrapper = document.querySelector(".link-wrapper");
+
+      const fetchAPI = async (url) => {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error("Failed to fetch.");
+          }
+
+          const data = await response.json();
+
+          return data;
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      const logging = async () => {
+        const data = await fetchAPI(
+          "https://www.abgeordnetenwatch.de/api/v2/politicians?range_start=500&range_end=600",
+        );
+
+        // console.log(data);
+
+        for (let i = 500; i <= 550; i++) {
+          console.log(`${i}` + " " + data.data[i].label);
+        }
+      };
+
+      logging();
+    </script>
+  </body>
+</html>
