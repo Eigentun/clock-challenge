@@ -15,7 +15,7 @@ const getData = async () => {
         const promises = await Promise.all(characters.map(async (url) => {
             const resp = await fetch(url);
             const respData = await resp.json();
-            const names = respData.name;
+            const names = await respData.name;
             return names;
         }));
         const namesList = promises.join("\n");
