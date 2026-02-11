@@ -1,4 +1,4 @@
-import * as fs from "fs";
+import fs from "node:fs/promises";
 
 const getData = async (url) => {
     try {
@@ -16,11 +16,14 @@ const getData = async (url) => {
 const writeFile = async (url) => {
     const character = await getData(url);
     const characterName = character.name;
-    fs.writeFile(`character-${characterName}.txt`, characterName, fileWritten);
+    await fs.writeFile(
+        `character-${characterName}.txt`,
+        characterName,
+    );
 };
 
-const fileWritten = () => {
-    console.log("file written");
-};
+// const fileWritten = () => {
+//     console.log("file written");
+// };
 
 writeFile("https://anapioficeandfire.com/api/characters/583");
