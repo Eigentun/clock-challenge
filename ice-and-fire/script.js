@@ -18,8 +18,12 @@ const getData = async () => {
             const names = await respData.name;
             return names;
         }));
-        const namesList = promises.join("\n");
-        fs.writeFile("character.txt", namesList, fileWritten);
+
+        for (const el of promises) {
+            fs.writeFile(`character-${el}.txt`, el, fileWritten);
+        }
+        //const namesList = promises.join("\n");
+        //fs.writeFile("character.txt", namesList, fileWritten);
 
         function fileWritten() {
             console.log("file written");
